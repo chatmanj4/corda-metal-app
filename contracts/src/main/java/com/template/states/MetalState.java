@@ -1,6 +1,6 @@
 package com.template.states;
 
-import com.template.contracts.TemplateContract;
+import com.template.contracts.MetalContract;
 import net.corda.core.contracts.BelongsToContract;
 import net.corda.core.contracts.ContractState;
 import net.corda.core.identity.AbstractParty;
@@ -9,7 +9,7 @@ import net.corda.core.identity.Party;
 import java.util.Arrays;
 import java.util.List;
 
-@BelongsToContract(TemplateContract.class)
+@BelongsToContract(MetalContract.class)
 public class MetalState implements ContractState {
 
     private String metalName;
