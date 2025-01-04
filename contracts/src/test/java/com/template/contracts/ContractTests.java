@@ -119,4 +119,69 @@ public class ContractTests {
             return null;
         });
     }
+
+    //TRANSFER COMMAND TEST CASES
+    @Test
+    public void metalContractRequiresOneInputAndOneOutputInTheTransaction(){
+        transaction(ledgerServices, tx -> {
+            tx.input(MetalContract.CID, metalStateInput);
+            tx.output(MetalContract.CID, metalStateOutput);
+            tx.command(TraderA.getPublicKey(), new MetalContract.transfer());
+            tx.verifies();
+            return null;
+        });
+
+        transaction(ledgerServices, tx -> {
+            tx.output(MetalContract.CID, metalStateOutput);
+            tx.command(TraderA.getPublicKey(), new MetalContract.transfer());
+            tx.fails();
+            return null;
+        });
+
+        transaction(ledgerServices, tx -> {
+            tx.input(MetalContract.CID, metalStateInput);
+            tx.command(TraderA.getPublicKey(), new MetalContract.transfer());
+            tx.fails();
+            return null;
+        });
+    }
+
+    @Test
+    public void metalContractRequiresTheTransactionCommandToBeATransferCommand(){
+        transaction(ledgerServices, tx -> {
+            tx.input(MetalContract.CID, metalStateInput);
+            tx.output(MetalContract.CID, metalStateOutput);
+            tx.command(TraderA.getPublicKey(), DummyCommandData.INSTANCE);
+            tx.fails();
+            return null;
+        });
+
+        transaction(ledgerServices, tx -> {
+            tx.input(MetalContract.CID, metalStateInput);
+            tx.output(MetalContract.CID, metalStateOutput);
+            tx.command(TraderA.getPublicKey(), new MetalContract.transfer());
+            tx.verifies();
+            return null;
+        });
+    }
+
+    @Test
+    public void metalContractRequiresTheOwnerToBeARequiredSigner(){
+        transaction(ledgerServices, tx -> {
+            tx.input(MetalContract.CID, metalStateInput);
+            tx.output(MetalContract.CID, metalStateOutput);
+            tx.command(TraderA.getPublicKey(), new MetalContract.transfer());
+            tx.verifies();
+            return null;
+        });
+
+        transaction(ledgerServices, tx -> {
+            tx.input(MetalContract.CID, metalStateInput);
+            tx.output(MetalContract.CID, metalStateOutput);
+            tx.command(Mint.getPublicKey(), new MetalContract.transfer());
+            tx.fails();
+            return null;
+        });
+    }
+
 }
