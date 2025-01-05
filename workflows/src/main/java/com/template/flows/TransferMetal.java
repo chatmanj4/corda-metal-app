@@ -44,7 +44,7 @@ public class TransferMetal extends FlowLogic<SignedTransaction>{
             FINALIZE_TRANSACTION
     );
 
-    public TransferMetal(String metalName, int weight, Party owner) {
+    public TransferMetal(String metalName, int weight, Party newOwner) {
         this.metalName = metalName;
         this.weight = weight;
         this.newOwner = newOwner;
