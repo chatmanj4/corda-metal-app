@@ -27,10 +27,7 @@ public class MetalContract implements Contract {
         }
         Command command = tx.getCommand(0);
         CommandData commandType = command.getValue();
-        // Add debug prints
-        System.out.println("Received command type: " + commandType.getClass().getName());
-        System.out.println("Is issue command? " + (commandType instanceof issue));
-        System.out.println("Command toString: " + commandType.toString());
+
         List<PublicKey> requiredSigners = command.getSigners();
 
         //----------------------------------------issue command rules -----------------------------------------
